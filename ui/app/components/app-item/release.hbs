@@ -4,7 +4,7 @@
       <b class="badge badge--version">v{{@release.sequence}}</b>
     </p>
     <small class="app-item__meta__secondary">
-      <Pds::Icon @type={{icon-for-component @release.component.name}} class="icon" />
+      <FlightIcon @name={{icon-for-component @release.component.name}} class="icon" />
       <span>{{if (eq @release.status.state 1) 'Releasing' 'Released'}} on
         <b>{{component-name @release.component.name}}</b>
         {{#if (eq @release.status.state 1)}}
@@ -27,7 +27,7 @@
       href={{enforce-protocol @release.url}}
       class="button button--primary button--external-link">
       <span>{{@release.url}}</span>
-      <Pds::Icon @type="exit" class="icon" />
+      <FlightIcon @name="external-link" class="icon" />
     </ExternalLink>
   {{/if}}
 </li>
