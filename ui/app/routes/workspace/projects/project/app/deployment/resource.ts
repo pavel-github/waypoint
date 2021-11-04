@@ -18,7 +18,6 @@ export default class extends Route {
       {
         label: `v${deployment.sequence}`,
         route: 'workspace.projects.project.app.deployment',
-        icon: 'upload',
       },
     ];
   }

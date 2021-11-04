@@ -3,9 +3,10 @@
     <b class="badge badge--version">v{{@build.sequence}}</b>
     <small class="app-item__meta__secondary">
       {{#let (or @build.pushedArtifact @build) as |operation|}}
-        <Pds::Icon
-          @type={{icon-for-component operation.component.name}}
-          class="icon"
+        <FlightIcon
+          data-test-icon-type={{icon-for-component operation.component.name}}
+          @name={{icon-for-component operation.component.name}}
+          @size="16"
         />
 
         <span>
@@ -17,7 +18,7 @@
             )
           }}
           <b>{{component-name operation.component.name}}</b>
-          <OperationStatusIndicator @status={{operation.status}} @matchTypography={{true}} />
+          <OperationStatusIndicator @status={{operation.status}}/>
         </span>
       {{/let}}
     </small>

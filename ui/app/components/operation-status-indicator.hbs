@@ -41,14 +41,14 @@
     "
     tabindex="0"
   >
-    <Pds::Icon
-      class="operation-status-indicator__badge"
-      @type={{or
+    <FlightIcon
+      @name={{or
         (and (eq vars.state "unknown") "help")
         (and (eq vars.state "running") "clock")
         (and (eq vars.state "success") "check")
         (and (eq vars.state "error") "alert-triangle")
       }}
+      @size="16"
     />
 
     <span class="operation-status-indicator__label">

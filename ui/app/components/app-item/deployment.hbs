@@ -8,7 +8,7 @@
       <b class="badge badge--version">v{{@deployment.sequence}}</b>
     </p>
     <small class="app-item__meta__secondary">
-      <FlightIcon @name={{icon-for-component @deployment.component.name}} class="icon" />
+      <FlightIcon @name={{icon-for-component @deployment.component.name}} @size="16" />
       <span>{{t (concat "page.deployments.status_prefix." @deployment.status.state)}}
         <b>{{component-name @deployment.component.name}}</b>
         {{#if (eq @deployment.status.state 1)}}
@@ -20,7 +20,7 @@
     </small>
     {{#if (eq @deployment.state 4)}}
       <b data-test-destroyed-badge class="badge badge--destroyed">
-        <FlightIcon @name="trash" class="icon" />&nbsp; {{t "page.deployments.destroyed_label"}}
+        <FlightIcon @name="trash" @size="16" />&nbsp; {{t "page.deployments.destroyed_label"}}
       </b>
     {{/if}}
   </LinkTo>
