@@ -1,14 +1,32 @@
 .operation-status-indicator {
-  @include Typography.Interface(S);
-  color: rgb(var(--text-muted));
-  cursor: default;
-
-  &--error {
-    color: rgb(var(--error-text));
+  display: inline-flex;
+  align-items: stretch;
+  vertical-align: bottom;
+  
+  span, b {
+    margin-right: scale.$sm-4;
   }
 
-  &--match-typography {
-    font-size: inherit;
-    font-weight: inherit;
+  svg {
+    margin-right: scale.$sm-3;
+  }
+
+  .timestamp {
+    display: inline-flex;
+    align-items: stretch;
+    height: 100%;
+    @include Typography.Interface(S);
+    line-height: 16px;
+    color: rgb(var(--text-muted));
+    cursor: default;
+
+    &--error {
+      color: rgb(var(--error-text));
+    }
+  
+    &--match-typography {
+      font-size: inherit;
+      font-weight: inherit;
+    }
   }
 }
