@@ -1,22 +1,27 @@
 .operation-status-indicator {
   display: inline-flex;
-  align-items: stretch;
-  vertical-align: bottom;
+  align-items: center;
   
   span, b {
     margin-right: scale.$sm-4;
+  }
+
+  b {
+    text-transform: capitalize;
   }
 
   svg {
     margin-right: scale.$sm-3;
   }
 
+  .icon-text-group {
+    display: inline-flex;
+    align-items: center;
+  }
+
   .timestamp {
     display: inline-flex;
-    align-items: stretch;
-    height: 100%;
-    @include Typography.Interface(S);
-    line-height: 16px;
+    align-items: center;
     color: rgb(var(--text-muted));
     cursor: default;
 
