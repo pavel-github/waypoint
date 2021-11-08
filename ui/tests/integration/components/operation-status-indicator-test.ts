@@ -24,7 +24,7 @@ module('Integration | Component | operation-status-indicator', function (hooks) 
           seconds: getUnixTime(subDays(new Date(), 1)),
           nanos: 0,
         },
-      }
+      },
     });
 
     await render(hbs`
@@ -56,7 +56,7 @@ module('Integration | Component | operation-status-indicator', function (hooks) 
           seconds: getUnixTime(subDays(new Date(), 1)),
           nanos: 0,
         },
-      }
+      },
     });
 
     await render(hbs`
@@ -81,7 +81,7 @@ module('Integration | Component | operation-status-indicator', function (hooks) 
           seconds: getUnixTime(subDays(new Date(), 1)),
           nanos: 0,
         },
-      }
+      },
     });
 
     await render(hbs`
