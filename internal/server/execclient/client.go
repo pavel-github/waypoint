@@ -31,6 +31,11 @@ type Client struct {
 	Stdout  io.Writer
 	Stderr  io.Writer
 
+	// DisablePTY forces a no-PTY mode, even if Stdout is detected to be a pty.
+	// This can be useful in scripting scenarios where you want to inform
+	// the executing process to not send fancy characters.
+	DisablePTY bool
+
 	// Either DeploymentId or InstanceId have to be set. If both are set, then
 	// InstanceId takes priority.
 	//
@@ -51,34 +56,37 @@ func (c *Client) Run() (int, error) {
 	var ptyReq *pb.ExecStreamRequest_PTY
 	var ptyF *os.File
 	var status terminal.Status
+	if !c.DisablePTY {
+		if f, ok := c.Stdout.(*os.File); ok && sshterm.IsTerminal(int(f.Fd())) {
+			status = c.UI.Status()
+			defer status.Close()
+			status.Update(fmt.Sprintf("Connecting to deployment v%d...", c.DeploymentSeq))
 
-	if f, ok := c.Stdout.(*os.File); ok && sshterm.IsTerminal(int(f.Fd())) {
-		status = c.UI.Status()
-		defer status.Close()
-		status.Update(fmt.Sprintf("Connecting to deployment v%d...", c.DeploymentSeq))
+			ptyF = f
+			c, err := console.ConsoleFromFile(ptyF)
+			if err != nil {
+				return 0, err
+			}
 
-		ptyF = f
-		c, err := console.ConsoleFromFile(ptyF)
-		if err != nil {
-			return 0, err
+			sz, err := c.Size()
+			c = nil
+			if err != nil {
+				return 0, err
+			}
+
+			ptyReq = &pb.ExecStreamRequest_PTY{
+				Enable: true,
+				Term:   os.Getenv("TERM"),
+				WindowSize: &pb.ExecStreamRequest_WindowSize{
+					Rows:   int32(sz.Height),
+					Cols:   int32(sz.Width),
+					Height: int32(sz.Height),
+					Width:  int32(sz.Width),
+				},
+			}
 		}
-
-		sz, err := c.Size()
-		c = nil
-		if err != nil {
-			return 0, err
-		}
-
-		ptyReq = &pb.ExecStreamRequest_PTY{
-			Enable: true,
-			Term:   os.Getenv("TERM"),
-			WindowSize: &pb.ExecStreamRequest_WindowSize{
-				Rows:   int32(sz.Height),
-				Cols:   int32(sz.Width),
-				Height: int32(sz.Height),
-				Width:  int32(sz.Width),
-			},
-		}
+	} else {
+		c.Logger.Warn("pty explicitly disabled")
 	}
 
 	// Start our exec stream

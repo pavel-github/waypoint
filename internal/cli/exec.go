@@ -18,6 +18,7 @@ type ExecCommand struct {
 	*baseCommand
 
 	flagInstanceId string
+	flagPty        bool
 }
 
 func (c *ExecCommand) targeted(
@@ -120,14 +121,15 @@ func (c *ExecCommand) Run(args []string) int {
 	client := c.project.Client()
 	err := c.DoApp(c.Ctx, func(ctx context.Context, app *clientpkg.App) error {
 		ec := &execclient.Client{
-			Logger:  c.Log,
-			UI:      c.ui,
-			Context: ctx,
-			Client:  client,
-			Args:    args,
-			Stdin:   os.Stdin,
-			Stdout:  os.Stdout,
-			Stderr:  os.Stderr,
+			Logger:     c.Log,
+			UI:         c.ui,
+			Context:    ctx,
+			Client:     client,
+			Args:       args,
+			Stdin:      os.Stdin,
+			Stdout:     os.Stdout,
+			Stderr:     os.Stderr,
+			DisablePTY: !c.flagPty,
 		}
 
 		var (
@@ -166,6 +168,14 @@ func (c *ExecCommand) Flags() *flag.Sets {
 			Name:   "instance",
 			Usage:  "Start an exec session on this specific instance",
 			Target: &c.flagInstanceId,
+		})
+
+		f.BoolVar(&flag.BoolVar{
+			Name: "pty",
+			Usage: "Allocate a pty. You usually want this to be true (the default) " +
+				"but in certain scripting scenarios you may want to set this false.",
+			Default: true,
+			Target:  &c.flagPty,
 		})
 	})
 }
