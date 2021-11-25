@@ -70,6 +70,11 @@
     <Pds::Icon @type="page-outline" class="icon" />
     {{t "nav.logs"}}
   </LinkTo>
+  <LinkTo @route="workspace.projects.project.app.resources"
+    @models={{array @model.application.project @model.application.application }}>
+    <Pds::Icon @type="box" class="icon" />
+    Resources{{!-- {{t "nav.logs"}} --}}
+  </LinkTo>
   <LinkTo @route="workspace.projects.project.app.exec"
     @models={{array @model.application.project @model.application.application }}>
     <Pds::Icon @type="exec" class="icon" />
