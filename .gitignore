@@ -17,3 +17,9 @@ data.db
 # .vscode - We intentionally commit .vscode in order to share project-specific settings
 
 .idea
+
+/specs/states/
+/specs/*.dvi
+/specs/*.out
+/specs/*.pdf
+/specs/*.tex
