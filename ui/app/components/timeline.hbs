@@ -1,0 +1,20 @@
+<ul class="timeline">
+  {{#each this.artifacts as |artifact|}}
+    <li>
+      <div class="timeline__dot"></div>
+      <LinkTo
+        title=""
+        @route={{artifact.route}}
+        @models={{array artifact.sequence}}
+      >
+        <span><Pds::Icon @type="check-circle-outline"/> {{t artifact.type}}</span>
+        <b class="badge badge--version">v{{artifact.sequence}}</b>
+        {{#if artifact.isCurrentRoute}}
+          <span class="timeline__current-marker">{{t "page.artifact.timeline.current-marker"}}</span>
+        {{/if}}
+        <span class="timeline__li__timestamp">{{date-format-distance-to-now artifact.completeTime}}</span>
+      </LinkTo>
+      <div class="timeline__dash"/>
+    </li>
+  {{/each}}
+</ul>

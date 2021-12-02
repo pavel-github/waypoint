@@ -21,11 +21,18 @@ page:
     switching-workspace: Loading…
   artifact:
     overview:
+      heading: 'Overview'
       image: 'Image'
       health-check: 'Health'
       re-run-health-check: 'Re-run'
       unavailable: 'Currently unavailable'
       commit: 'Commit'
+    timeline:
+      heading: 'Timeline'
+      build: 'Build'
+      deployment: 'Deployment'
+      release: 'Release'
+      current-marker: 'You are here'
   builds:
     title: 'Builds'
   build:
