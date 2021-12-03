@@ -471,7 +471,7 @@ func remoteOpPreferred(ctx context.Context, client pb.WaypointClient, project *p
 	}
 	hasRemoteRunner := false
 	for _, runner := range runnersResp.Runners {
-		if _, ok := runner.Type.(*pb.Runner_Remote); ok {
+		if _, ok := runner.Kind.(*pb.Runner_Remote_); ok {
 			hasRemoteRunner = true
 			break
 		}
