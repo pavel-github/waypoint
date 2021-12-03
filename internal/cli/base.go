@@ -325,6 +325,11 @@ func (c *baseCommand) Init(opts ...Option) error {
 	// config parsing, as precedence order means we take the most specific value
 	// which is the -project flag
 	if c.flagProject != "" {
+		// Warn if the project from config and the project from flags conflict
+		if c.refProject != nil {
+			c.ui.Output(warnProjectFlagMismatch, c.refProject.Project, c.flagProject, terminal.WithWarningStyle())
+		}
+
 		c.refProject = &pb.Ref_Project{Project: c.flagProject}
 	}
 
@@ -873,5 +878,10 @@ short notation -p and -a.
 The current Waypoint server does not support snapshots. Rerunning the command
 with '-snapshot=false' is required, and there will be no automatic data backups
 for the server.
+`)
+
+	warnProjectFlagMismatch = strings.TrimSpace(`
+Warning: Currently in project directory for %q, but will operate 
+against specified project %q
 `)
 )
